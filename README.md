@@ -16,7 +16,6 @@ In this game, two players can choose characters and engage in intense fights. Th
 
 ## Features
 
-
 - Selection of unique characters with different abilities.
 - Health bars to monitor the status of each player.
 - Special moves and attacks for each character.
