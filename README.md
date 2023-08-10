@@ -12,7 +12,6 @@ To get started with the game, follow these steps:
 
 ## Gameplay
 
-
 In this game, two players can choose characters and engage in intense fights. The objective is to defeat the opponent by reducing their health points to zero. The player with the higher health points at the end wins.
 
 ## Features
