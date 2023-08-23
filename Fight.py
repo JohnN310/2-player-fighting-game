@@ -23,12 +23,12 @@ BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 
 # Players
-p1 = pygame.image.load("warrior.png")
+p1 = pygame.image.load("player1.gif")
 p2 = pygame.image.load("warrior2.png")
 p1 = pygame.transform.scale(p1, (100, 100))
 p2 = pygame.transform.scale(p2, (100, 100))
 player1 = p1.get_rect()
-player2 = p1.get_rect()
+player2 = p2.get_rect()
 # Set initial positions
 player1.x = 70  # Set the desired x-coordinate for player 1
 player1.y = 300  # Set the desired y-coordinate for player 1
@@ -46,6 +46,18 @@ punch2_active = False
 # Create Rect objects for the punches
 punch1_rect = punch1.get_rect()
 punch2_rect = punch2.get_rect()
+
+# # Specials
+# special1 = pygame.image.load("sword.png")
+# special2 = pygame.image.load("sword2.png")
+# special1 = pygame.transform.scale(special1, (100, 100))
+# special2 = pygame.transform.scale(special2, (100, 100))
+# special_speed = 10  # Adjust the speed as needed
+# special1_active = False
+# special2_active = False
+# # Create Rect objects for the Specials
+# special1_rect = special1.get_rect()
+# special2_rect = special2.get_rect()
 
 # Health points
 health1 = 70
@@ -78,7 +90,7 @@ countdown = 3  # Countdown time in seconds
 fight_duration = 3  # Fight duration in seconds
 current_fight_time = 0
 countdown_font = pygame.font.Font("fonts/Orbitron.ttf", 90)
-timer_font = pygame.font.Font("fonts/Orbitron.ttf", 25)  # Font for the timer
+timer_font = pygame.font.Font("fonts/Orbitron.ttf", 40)  # Font for the timer
 fight_font=pygame.font.Font("fonts/alfa_pinoy_font_by_maypakialam-d3071b3.ttf", 74)
 fight_text_screen=fight_font.render("Fight!", True, (228, 28, 28))
 
@@ -187,8 +199,10 @@ while running:
             screen.blit(punch2,punch2_rect.topleft)    
 
         #Draw timer
-        timer_text = timer_font.render(f"Time: {int(fight_duration - current_fight_time)}", True, (255, 255, 255))
-        timer_rect = timer_text.get_rect(topright=(width - 10, 10))
+        timer_text = timer_font.render(f"{int(fight_duration - current_fight_time)}", True,  (234,243,111))
+        timer_rect = timer_text.get_rect()
+        timer_rect.x=width // 2 -12
+        timer_rect.y=10
         screen.blit(timer_text, timer_rect)
 
         # Update the display
@@ -207,48 +221,53 @@ while running:
             continue_rect=continue_text.get_rect()
             quit_rect=quit_text.get_rect()
             next_rect=next_round_text.get_rect()
-            continue_rect.x=250
-            continue_rect.y=250
-            next_rect.x=250
-            next_rect.y=300
-            quit_rect.x=250
-            quit_rect.y=350
+            continue_rect.x=300
+            continue_rect.y=240
+            next_rect.x=300
+            next_rect.y=290
+            quit_rect.x=300
+            quit_rect.y=340
+            screen.blit(new_background, (0, 0))
             if health1>0 and health2>0:
                 screen.blit(continue_text, continue_rect)
             screen.blit(quit_text, quit_rect)
             screen.blit(next_round_text, next_rect)
             pygame.display.flip()
-            pygame.time.delay(3000)
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button
-                    if continue_rect.collidepoint(event.pos):
-                        screen.blit(new_background, (0, 0))
-                        pygame.display.flip()
-                        game_active = False
-                        screen.blit(continue_text_screen, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
-                        pygame.display.flip()
-                        pygame.time.delay(2000)
-                    elif quit_rect.collidepoint(event.pos):
-                        screen.blit(new_background, (0, 0))
-                        pygame.display.flip()
-                        game_active = False
-                        screen.blit(game_over_text, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
-                        pygame.display.flip()
-                        pygame.time.delay(2000)
-                        pygame.quit()
-                    elif next_rect.collidepoint(event.pos):
-                        screen.blit(new_background, (0, 0))
-                        pygame.display.flip()
-                        game_active = False
-                        screen.blit(next_round_text_screen, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
-                        pygame.display.flip()
-                        pygame.time.delay(2000)
-                        health1=70
-                        health2=70
-                        player1.x = 70  # Set the desired x-coordinate for player 1
-                        player1.y = 300  # Set the desired y-coordinate for player 1
-                        player2.x = 650  # Set the desired x-coordinate for player 2
-                        player2.y = 300  # Set the desired y-coordinate for player 2
+            boo=True
+            while boo:
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Left mouse button
+                        if continue_rect.collidepoint(event.pos):
+                            screen.blit(new_background, (0, 0))
+                            pygame.display.flip()
+                            game_active = False
+                            screen.blit(continue_text_screen, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
+                            pygame.display.flip()
+                            pygame.time.delay(2000)
+                            boo=False
+                        elif quit_rect.collidepoint(event.pos):
+                            screen.blit(new_background, (0, 0))
+                            pygame.display.flip()
+                            game_active = False
+                            screen.blit(game_over_text, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
+                            pygame.display.flip()
+                            pygame.time.delay(2000)
+                            pygame.quit()
+                            boo=False
+                        elif next_rect.collidepoint(event.pos):
+                            screen.blit(new_background, (0, 0))
+                            pygame.display.flip()
+                            game_active = False
+                            screen.blit(next_round_text_screen, (width // 2 - game_over_text.get_width() // 2, height // 2 - game_over_text.get_height() // 2))
+                            pygame.display.flip()
+                            pygame.time.delay(2000)
+                            health1=70
+                            health2=70
+                            player1.x = 70  # Set the desired x-coordinate for player 1
+                            player1.y = 300  # Set the desired y-coordinate for player 1
+                            player2.x = 650  # Set the desired x-coordinate for player 2
+                            player2.y = 300  # Set the desired y-coordinate for player 2
+                            boo=False
     else:
         # Draw countdown on the screen
         countdown_text = countdown_font.render(str(countdown), True, (255, 255, 255))
